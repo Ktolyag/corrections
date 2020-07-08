@@ -123,6 +123,28 @@ async def ParseSauce(googleurl):
 
 
 
+async def scam(results, lim):
+
+    single = opener.open(results['similar_images']).read()
+    decoded = single.decode('utf-8')
+
+    imglinks = []
+    counter = 0
+
+    pattern = r'^,\[\"(.*[.png|.jpg|.jpeg])\",[0-9]+,[0-9]+\]$'
+    oboi = re.findall(pattern, decoded, re.I | re.M)
+
+    for imglink in oboi:
+        counter += 1
+        if not counter >= int(lim):
+            imglinks.append(imglink)
+        else:
+            break
+
+    return imglinks
+
+
+
 CMD_HELP.update({
     'search':
     '.search\
